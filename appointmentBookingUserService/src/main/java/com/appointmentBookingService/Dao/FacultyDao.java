@@ -9,10 +9,12 @@ import java.util.Collection;
  * Created by mourya on 8/21/18.
  */
 public interface FacultyDao {
-    Faculty getFacultyInfo(int id);
-    Collection<Appointment> getAllAppointment(int id);
-    Collection<Appointment> getTodaysAppointment(int id);
-    Collection<Appointment> getRequestedAppointments(int id);
-    Collection<Appointment> getAcceptedAppointments(int id);
-    Boolean acceptAppointment(int id);
+    Faculty getFacultyInfo(String id);
+    Collection<Appointment> getTodaysAppointment(String id);
+    Collection<Appointment> getRequestedAppointments(String id);
+    Collection<Appointment> getAcceptedAppointments(String id);
+    void acceptAppointment(String id);
+    void cancelAppointment(String meetingID);
+    Collection<Appointment> getUpcomingAppointments(String id);
+    Collection<Appointment> getPastAppointments(String id);
 }

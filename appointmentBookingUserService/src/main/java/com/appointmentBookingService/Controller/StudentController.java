@@ -1,15 +1,12 @@
 package com.appointmentBookingService.Controller;
 
+import com.appointmentBookingService.Entity.Appointment;
 import com.appointmentBookingService.Entity.Availability;
 import com.appointmentBookingService.Entity.Faculty;
 import com.appointmentBookingService.Entity.Student;
-import com.appointmentBookingService.Entity.Term;
 import com.appointmentBookingService.Service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 
@@ -19,7 +16,6 @@ import java.util.Collection;
 @RestController
 @RequestMapping("/student")
 public class StudentController {
-
     @Autowired
     private StudentService studentService;
 
@@ -43,8 +39,8 @@ public class StudentController {
         return studentService.getFaculty(id);
     }
 
-    @RequestMapping(value="term/{id}")
-    public Term getTermById(@PathVariable("id") int id) {
-        return studentService.getTerm(String.valueOf(id));
+    @RequestMapping(value="/{id}/requestAppointment", method = RequestMethod.POST)
+    public Appointment requestAppointment(@RequestBody Appointment appointment) {
+        return studentService.requestAppointment(appointment);
     }
 }

@@ -10,9 +10,6 @@ public class Student {
     private String email;
     private String departmentName;
 
-    public Student() {
-    }
-
     public String getUniversityID() {
         return universityID;
     }

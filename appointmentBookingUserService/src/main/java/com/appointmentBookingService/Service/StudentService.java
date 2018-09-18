@@ -1,10 +1,7 @@
 package com.appointmentBookingService.Service;
 
 import com.appointmentBookingService.Dao.StudentDao;
-import com.appointmentBookingService.Entity.Availability;
-import com.appointmentBookingService.Entity.Faculty;
-import com.appointmentBookingService.Entity.Student;
-import com.appointmentBookingService.Entity.Term;
+import com.appointmentBookingService.Entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -17,7 +14,7 @@ import java.util.Collection;
 @Service
 public class StudentService {
     @Autowired
-    @Qualifier("mysql")
+    @Qualifier("student")
     private StudentDao studentDao;
     public Student getStudentInfo(String id){
         return this.studentDao.getStudentInfo(id);
@@ -35,5 +32,8 @@ public class StudentService {
         return this.studentDao.getFacultyById(id);
     }
 
-    public Term getTerm(String id) { return this.studentDao.getTermInfo(id);}
+    public Appointment requestAppointment(Appointment appointment) {
+        return studentDao.requestAppointment(appointment.getStartTime(),appointment.getEndTime(),appointment.getFacultyID(),
+                appointment.getStudentID(),appointment.getDate(),appointment.getDescription(),appointment.getTermName());
+    }
 }

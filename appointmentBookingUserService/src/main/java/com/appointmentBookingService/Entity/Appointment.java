@@ -1,8 +1,5 @@
 package com.appointmentBookingService.Entity;
 
-import java.sql.Time;
-import java.util.Date;
-
 /**
  * Created by mourya on 8/21/18.
  */
@@ -12,9 +9,26 @@ public class Appointment {
     private String facultyID;
     private String startTime;
     private String endTime;
-    private String officeHoursID;
     private String description;
-    private String accepted;
+    private String status;
+    private String termName;
+
+    public String getTermName() {
+        return termName;
+    }
+
+    public void setTermName(String termName) {
+        this.termName = termName;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     private String date;
 
     public Appointment() {
@@ -68,14 +82,6 @@ public class Appointment {
         this.facultyID = facultyID;
     }
 
-    public String getOfficeHoursID() {
-        return officeHoursID;
-    }
-
-    public void setOfficeHoursID(String officeHoursID) {
-        this.officeHoursID = officeHoursID;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -84,11 +90,4 @@ public class Appointment {
         this.description = description;
     }
 
-    public String getAccepted() {
-        return accepted;
-    }
-
-    public void setAccepted(String accepted) {
-        this.accepted = accepted;
-    }
 }

@@ -11,8 +11,6 @@ public class Term {
     private String endDate;
     private String name;
 
-    public Term() {};
-
     public String getTermID() {
         return termID;
     }
