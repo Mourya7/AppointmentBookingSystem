@@ -42,11 +42,6 @@ abstract public class Person {
         },id);
     }
 
-    protected void cancelAppointment(String meetingID) {
-        final String SQL_CANCEL_APPOINTMENT = "Update appointment Set status = 'cancelled' where meetingID = ?";
-        jdbcTemplate.update(SQL_CANCEL_APPOINTMENT);
-    }
-
     protected Collection<Appointment> getUpcomingAppointments(String id, String sqlQuery) {
         LocalDate today = LocalDate.now(ZoneId.of("US/Eastern"));
         Collection<Appointment> appointments = getAllAppointments(id,sqlQuery);

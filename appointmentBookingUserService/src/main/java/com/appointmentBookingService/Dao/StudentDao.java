@@ -13,7 +13,7 @@ public interface StudentDao {
     public Availability getFacultyAvailability(int id);
     public Student getStudentInfo(String id);
     public Appointment requestAppointment(String startTime, String endTime, String facultyID, String studentID, String date, String description, String termName);
-    public void cancelAppointment(String meetingID);
+    public Boolean cancelAppointment(String meetingID,String studentID);
     public Collection<Appointment> getUpcomingAppointments(String id);
     public Collection<Appointment> getPastAppointments(String id);
 }

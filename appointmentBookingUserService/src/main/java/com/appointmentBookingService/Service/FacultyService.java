@@ -31,12 +31,12 @@ public class FacultyService {
         return facultyDao.getAcceptedAppointments(facultyID);
     }
 
-    public void acceptAppointment(String meetingID) {
-        facultyDao.acceptAppointment(meetingID);
+    public Boolean acceptAppointment(String meetingID,String facultyID) {
+        return facultyDao.acceptAppointment(meetingID,facultyID);
     }
 
-    public void cancelAppointment(String meetingID) {
-        facultyDao.cancelAppointment(meetingID);
+    public Boolean cancelAppointment(String meetingID,String facultyID) {
+        return facultyDao.cancelAppointment(meetingID,facultyID);
     }
 
     public Collection<Appointment> getUpcomingAppointments(String facultyID) {

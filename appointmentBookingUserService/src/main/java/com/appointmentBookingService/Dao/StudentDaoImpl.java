@@ -108,8 +108,9 @@ public class StudentDaoImpl extends Person implements StudentDao {
     }
 
     @Override
-    public void cancelAppointment(String meetingID) {
-        super.cancelAppointment(meetingID);
+    public Boolean cancelAppointment(String meetingID, String studentID) {
+        final String SQL_CANCEL_APPOINTMENT = "Update appointment Set status = 'cancelled' where meetingID = ? and studentID = ?";
+        return jdbcTemplate.update(SQL_CANCEL_APPOINTMENT,new Object[]{meetingID,studentID}) > 0;
     }
 
     @Override

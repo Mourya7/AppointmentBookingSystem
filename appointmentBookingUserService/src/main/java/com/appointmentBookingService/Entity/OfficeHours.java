@@ -9,6 +9,24 @@ public class OfficeHours {
     private String day;
     private String startTime;
     private String endTime;
+    private String facultyID;
+    private String termID;
+
+    public String getTermID() {
+        return termID;
+    }
+
+    public void setTermID(String termID) {
+        this.termID = termID;
+    }
+
+    public String getFacultyID() {
+        return facultyID;
+    }
+
+    public void setFacultyID(String facultyID) {
+        this.facultyID = facultyID;
+    }
 
     public OfficeHours() {};
 

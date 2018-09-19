@@ -9,9 +9,10 @@ import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.stereotype.Repository;
 
 import java.sql.*;
-
+@Repository("admin")
 public class AdminDaoImpl implements AdminDAO {
 
     @Autowired

@@ -86,14 +86,15 @@ public class FacultyDaoImpl extends Person implements FacultyDao {
     }
 
     @Override
-    public void acceptAppointment(String meetingID) {
-        final String SQL_ACCEPT_APPOINTMENT = "Update appointment Set status = 'accepted' where meetingID = ?";
-        jdbcTemplate.update(SQL_ACCEPT_APPOINTMENT,meetingID);
+    public Boolean acceptAppointment(String meetingID,String facultyID) {
+        final String SQL_ACCEPT_APPOINTMENT = "Update appointment Set status = 'accepted' where meetingID = ? and facultyID = ?";
+        return jdbcTemplate.update(SQL_ACCEPT_APPOINTMENT,new Object[]{meetingID,facultyID}) > 0;
     }
 
     @Override
-    public void cancelAppointment(String meetingID) {
-        super.cancelAppointment(meetingID);
+    public Boolean cancelAppointment(String meetingID, String facultyID) {
+        final String SQL_CANCEL_APPOINTMENT = "Update appointment Set status = 'cancelled' where meetingID = ? and facultyID = ?";
+        return jdbcTemplate.update(SQL_CANCEL_APPOINTMENT,new Object[]{meetingID,facultyID}) > 0;
     }
 
     @Override
