@@ -21,17 +21,17 @@ public class FacultyController {
 
     @RequestMapping(value="/today",method = RequestMethod.POST)
     public Collection<Appointment> getTodaysAppointments(@RequestBody Faculty faculty) {
-        return facultyService.getTodaysAppointment(faculty.getFacultyId());
+        return facultyService.getTodaysAppointment(faculty.getFacultyID());
     }
 
     @RequestMapping(value="/requests",method = RequestMethod.POST)
     public Collection<Appointment> getRequestedAppointments(@RequestBody Faculty faculty) {
-        return facultyService.getRequestedAppointments(faculty.getFacultyId());
+        return facultyService.getRequestedAppointments(faculty.getFacultyID());
     }
 
     @RequestMapping(value="/accepted",method = RequestMethod.POST)
     public Collection<Appointment> getAcceptedAppointments(@RequestBody Faculty faculty) {
-        return facultyService.getAcceptedAppointments(faculty.getFacultyId());
+        return facultyService.getAcceptedAppointments(faculty.getFacultyID());
     }
 
     @RequestMapping(value="/accept",method = RequestMethod.PUT)

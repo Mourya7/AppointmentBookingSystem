@@ -28,7 +28,7 @@ public class StudentDaoImpl extends Person implements StudentDao {
 
     @Override
     public Student getStudentInfo(String studentID) {
-        final String SQL_GET_STUDENT = "SELECT * FROM student WHERE universityID = ?";
+        final String SQL_GET_STUDENT = "SELECT * FROM student WHERE studentID = ?";
         return jdbcTemplate.queryForObject(SQL_GET_STUDENT, new RowMapper<Student>() {
             @Override
             public Student mapRow(ResultSet resultSet, int i) throws SQLException {
@@ -36,7 +36,7 @@ public class StudentDaoImpl extends Person implements StudentDao {
                 student.setDepartmentName(getDepartmentName(resultSet.getString("departmentID")));
                 student.setEmail(resultSet.getString("email"));
                 student.setName(resultSet.getString("name"));
-                student.setUniversityID(resultSet.getString("universityID"));
+                student.setStudentID(resultSet.getString("studentID"));
                 return student;
             }
         }, studentID);
@@ -46,7 +46,7 @@ public class StudentDaoImpl extends Person implements StudentDao {
         @Override
         public Faculty mapRow(ResultSet resultSet, int i) throws SQLException {
             Faculty faculty = new Faculty();
-            faculty.setFacultyId(resultSet.getString("facultyID"));
+            faculty.setFacultyID(resultSet.getString("facultyID"));
             faculty.setName(resultSet.getString("name"));
             faculty.setEmail(resultSet.getString("email"));
             faculty.setDepartmentName(getDepartmentName(resultSet.getString("departmentID")));
@@ -64,29 +64,7 @@ public class StudentDaoImpl extends Person implements StudentDao {
     @Override
     public Collection<OfficeHours> getFacultyAvailability(String facultyID, String termName) {
         Integer termID = getTermIDByName(termName);
-        final String SQL_GET_FACULTY_AVAILABILITY = "SELECT availabilityID FROM availability where facultyID = ? and termID = ?";
-        Integer availabilityID = jdbcTemplate.queryForObject(SQL_GET_FACULTY_AVAILABILITY, new RowMapper<Integer>() {
-
-            @Override
-            public Integer mapRow(ResultSet resultSet, int i) throws SQLException {
-                return resultSet.getInt("availabilityID");
-            }
-        }, facultyID,termID);
-        return getOfficeHoursByAvailabilityID(availabilityID);
-    }
-
-    private Collection<OfficeHours> getOfficeHoursByAvailabilityID(Integer availabilityID) {
-        final String SQL_GET_OFFICE_HOURS = "Select * from officeHours where availability = ?";
-        return jdbcTemplate.query(SQL_GET_OFFICE_HOURS, new RowMapper<OfficeHours>() {
-            @Override
-            public OfficeHours mapRow(ResultSet resultSet, int i) throws SQLException {
-                OfficeHours officeHours = new OfficeHours();
-                officeHours.setDay(resultSet.getString("day"));
-                officeHours.setStartTime(resultSet.getString("startTime"));
-                officeHours.setEndTime(resultSet.getString("endTime"));
-                return officeHours;
-            }
-        },availabilityID);
+        return super.getFacultyAvailability(facultyID,termID);
     }
 
     private Integer getTermIDByName(String termName) {
@@ -148,11 +126,8 @@ public class StudentDaoImpl extends Person implements StudentDao {
                 LocalTime officeHourEnd = LocalTime.parse(officeHour.getEndTime());
                 if((startTime.isAfter(officeHourStart) || startTime.equals(officeHourStart))
                         && (endTime.isBefore(officeHourEnd) || endTime.equals(officeHourEnd))) {
-                    validTime = true;
+                    return true;
                 }
-            }
-            if(!validTime) {
-                return false;
             }
         }
         return false;
@@ -175,7 +150,7 @@ public class StudentDaoImpl extends Person implements StudentDao {
 
     private Integer getHasFacultyOfficeHours(String facultyID, Integer termID) {
         //Every Faculty has exactly one availability for a given term {fall/summer/spring}
-        final String SQL_GET_FACULTY_AVAILABILITY = "SELECT hasOfficeHours FROM availability where facultyID = ? and term = ?";
+        final String SQL_GET_FACULTY_AVAILABILITY = "SELECT hasOfficeHours FROM availability where facultyID = ? and termID = ?";
         return jdbcTemplate.queryForObject(SQL_GET_FACULTY_AVAILABILITY, new RowMapper<Integer>() {
             @Override
             public Integer mapRow(ResultSet resultSet, int i) throws SQLException {

@@ -1,6 +1,7 @@
 package com.appointmentBookingService.Dao.MainDao;
 
 import com.appointmentBookingService.Entity.Appointment;
+import com.appointmentBookingService.Entity.OfficeHours;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -67,5 +68,31 @@ abstract public class Person {
             appointments.remove(appointment);
         }
         return appointments;
+    }
+
+    protected Collection<OfficeHours> getFacultyAvailability(String facultyID, Integer termID) {
+        final String SQL_GET_FACULTY_AVAILABILITY = "SELECT availabilityID FROM availability where facultyID = ? and termID = ?";
+        Integer availabilityID = jdbcTemplate.queryForObject(SQL_GET_FACULTY_AVAILABILITY, new RowMapper<Integer>() {
+
+            @Override
+            public Integer mapRow(ResultSet resultSet, int i) throws SQLException {
+                return resultSet.getInt("availabilityID");
+            }
+        }, facultyID,termID);
+        return getOfficeHoursByAvailabilityID(availabilityID);
+    }
+
+    protected Collection<OfficeHours> getOfficeHoursByAvailabilityID(Integer availabilityID) {
+        final String SQL_GET_OFFICE_HOURS = "Select * from officeHours where availability = ?";
+        return jdbcTemplate.query(SQL_GET_OFFICE_HOURS, new RowMapper<OfficeHours>() {
+            @Override
+            public OfficeHours mapRow(ResultSet resultSet, int i) throws SQLException {
+                OfficeHours officeHours = new OfficeHours();
+                officeHours.setDay(resultSet.getString("day"));
+                officeHours.setStartTime(resultSet.getString("startTime"));
+                officeHours.setEndTime(resultSet.getString("endTime"));
+                return officeHours;
+            }
+        },availabilityID);
     }
 }

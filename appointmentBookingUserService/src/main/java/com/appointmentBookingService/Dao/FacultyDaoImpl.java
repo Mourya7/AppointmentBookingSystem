@@ -30,7 +30,7 @@ public class FacultyDaoImpl extends Person implements FacultyDao {
             @Override
             public Faculty mapRow(ResultSet resultSet, int i) throws SQLException {
                 Faculty faculty = new Faculty();
-                faculty.setFacultyId(resultSet.getString("facultyID"));
+                faculty.setFacultyID(resultSet.getString("facultyID"));
                 faculty.setName(resultSet.getString("name"));
                 faculty.setEmail(resultSet.getString("email"));
                 faculty.setDepartmentName(getDepartmentName(resultSet.getString("departmentID")));

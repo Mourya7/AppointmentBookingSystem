@@ -4,18 +4,18 @@ package com.appointmentBookingService.Entity;
  * Created by mourya on 8/22/18.
  */
 public class Student {
-    private String universityID;
+    private String studentID;
     private String departmentID;
     private String name;
     private String email;
     private String departmentName;
 
-    public String getUniversityID() {
-        return universityID;
+    public String getStudentID() {
+        return studentID;
     }
 
-    public void setUniversityID(String universityID) {
-        this.universityID = universityID;
+    public void setStudentID(String studentID) {
+        this.studentID = studentID;
     }
 
     public String getDepartmentID() {

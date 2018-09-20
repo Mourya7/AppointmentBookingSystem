@@ -197,9 +197,9 @@ public class AdminDaoImpl implements AdminDAO {
         }
         return true;
     }
+
     @Override
     public void updateOfficeHours(String facultyID, String term, String day, String startTime, String endTime) {
-        /*final String SQL_UPDATE_HOURS = "Update officeHours set startTime = ?, endTime = ? where facultyID = ? and term = ? and day = ?";
-        jdbcTemplate.update(SQL_UPDATE_HOURS,startTime,endTime,facultyID,term,day);*/
+
     }
 }

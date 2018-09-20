@@ -5,7 +5,7 @@ package com.appointmentBookingService.Entity;
  */
 public class Faculty {
     private String name;
-    private String facultyId;
+    private String facultyID;
     private String departmentID;
     private String email;
     private String phone;
@@ -29,12 +29,12 @@ public class Faculty {
         this.name = name;
     }
 
-    public String getFacultyId() {
-        return facultyId;
+    public String getFacultyID() {
+        return facultyID;
     }
 
-    public void setFacultyId(String facultyId) {
-        this.facultyId = facultyId;
+    public void setFacultyID(String facultyID) {
+        this.facultyID = facultyID;
     }
 
     public String getDepartmentID() {
