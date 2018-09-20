@@ -33,7 +33,7 @@ public class FacultyDaoImpl extends Person implements FacultyDao {
                 faculty.setFacultyId(resultSet.getString("facultyID"));
                 faculty.setName(resultSet.getString("name"));
                 faculty.setEmail(resultSet.getString("email"));
-                faculty.setDepartmentName(getDepartmentName(resultSet.getString("department"),SQL_GET_DEPT_NAME));
+                faculty.setDepartmentName(getDepartmentName(resultSet.getString("department")));
                 faculty.setPhone(resultSet.getString("phone"));
                 return faculty;
             }
@@ -72,8 +72,8 @@ public class FacultyDaoImpl extends Person implements FacultyDao {
 
     @Override
     public Collection<Appointment> getAcceptedAppointments(String facultyID) {
-        final String SQL_GET_ACCEPTED_APPTS = "Select * from appointment where facultyID = ? and status = 'accepted'";
-        Collection<Appointment> appointments = getAllAppointments(facultyID,SQL_GET_ACCEPTED_APPTS);
+        final String SQL_GET_ACCEPTED_APTS = "Select * from appointment where facultyID = ? and status = 'accepted'";
+        Collection<Appointment> appointments = getAllAppointments(facultyID,SQL_GET_ACCEPTED_APTS);
         LocalDate today = LocalDate.now(ZoneId.of("US/Eastern"));
         for(Appointment appointment : appointments) {
             LocalDate meetingDate = LocalDate.parse(appointment.getDate());
@@ -86,13 +86,13 @@ public class FacultyDaoImpl extends Person implements FacultyDao {
     }
 
     @Override
-    public Boolean acceptAppointment(String meetingID,String facultyID) {
+    public Boolean acceptAppointment(Integer meetingID,String facultyID) {
         final String SQL_ACCEPT_APPOINTMENT = "Update appointment Set status = 'accepted' where meetingID = ? and facultyID = ?";
         return jdbcTemplate.update(SQL_ACCEPT_APPOINTMENT,new Object[]{meetingID,facultyID}) > 0;
     }
 
     @Override
-    public Boolean cancelAppointment(String meetingID, String facultyID) {
+    public Boolean cancelAppointment(Integer meetingID, String facultyID) {
         final String SQL_CANCEL_APPOINTMENT = "Update appointment Set status = 'cancelled' where meetingID = ? and facultyID = ?";
         return jdbcTemplate.update(SQL_CANCEL_APPOINTMENT,new Object[]{meetingID,facultyID}) > 0;
     }

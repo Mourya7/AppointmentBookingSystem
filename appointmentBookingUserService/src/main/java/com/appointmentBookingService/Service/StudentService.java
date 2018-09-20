@@ -16,20 +16,16 @@ public class StudentService {
     @Autowired
     @Qualifier("student")
     private StudentDao studentDao;
-    public Student getStudentInfo(String id){
-        return this.studentDao.getStudentInfo(id);
+    public Student getStudentInfo(String studentID){
+        return this.studentDao.getStudentInfo(studentID);
     }
 
     public Collection<Faculty> getAllFaculty() {
         return this.studentDao.getAllFaculty();
     }
 
-    public Availability getFacultyAvailability(int id) {
-        return this.studentDao.getFacultyAvailability(id);
-    }
-
-    public Faculty getFaculty(int id) {
-        return this.studentDao.getFacultyById(id);
+    public Availability getFacultyAvailability(Availability availability) {
+        return this.studentDao.getFacultyAvailability(availability.getFacultyID(),availability.getTermName());
     }
 
     public Appointment requestAppointment(Appointment appointment) {

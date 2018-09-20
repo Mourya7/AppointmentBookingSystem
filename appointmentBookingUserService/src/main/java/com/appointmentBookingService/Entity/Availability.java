@@ -4,19 +4,20 @@ package com.appointmentBookingService.Entity;
  * Created by mourya on 8/21/18.
  */
 public class Availability {
-    private String id;
+    private Integer availabilityID;
     private String facultyID;
-    private String term;
+    private Integer termID;
+    private String termName;
     private int hasOfficeHours;
 
     public Availability() {}
 
-    public String getId() {
-        return id;
+    public Integer getAvailabilityID() {
+        return availabilityID;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setAvailabilityID(Integer availabilityID) {
+        this.availabilityID = availabilityID;
     }
 
     public String getFacultyID() {
@@ -27,12 +28,20 @@ public class Availability {
         this.facultyID = facultyID;
     }
 
-    public String getTerm() {
-        return term;
+    public Integer getTermID() {
+        return termID;
     }
 
-    public void setTerm(String term) {
-        this.term = term;
+    public void setTermID(Integer termID) {
+        this.termID = termID;
+    }
+
+    public String getTermName() {
+        return termName;
+    }
+
+    public void setTermName(String termName) {
+        this.termName = termName;
     }
 
     public int getHasOfficeHours() {

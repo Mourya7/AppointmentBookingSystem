@@ -15,8 +15,9 @@ abstract public class Person {
     @Autowired
     JdbcTemplate jdbcTemplate;
 
-    protected String getDepartmentName(String departmentID, String sqlQuery) {
-        return jdbcTemplate.queryForObject(sqlQuery, new RowMapper<String>() {
+    protected String getDepartmentName(String departmentID) {
+        final String SQL_GET_DEPT_NAME = "SELECT name FROM department WHERE departmentID = ?";
+        return jdbcTemplate.queryForObject(SQL_GET_DEPT_NAME, new RowMapper<String>() {
             @Override
             public String mapRow(ResultSet resultSet, int i) throws SQLException {
                 return resultSet.getString("name");
@@ -35,7 +36,7 @@ abstract public class Person {
                 appointment.setDate(resultSet.getString("date"));
                 appointment.setStartTime(resultSet.getString("startTime"));
                 appointment.setEndTime(resultSet.getString("endTime"));
-                appointment.setMeetingID(resultSet.getString("meetingID"));
+                appointment.setMeetingID(resultSet.getInt("meetingID"));
                 appointment.setStatus(resultSet.getString("status"));
                 return appointment;
             }

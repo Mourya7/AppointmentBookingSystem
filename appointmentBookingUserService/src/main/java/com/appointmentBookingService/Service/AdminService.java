@@ -19,11 +19,11 @@ public class AdminService {
     }
 
     public Availability addAvailability(Availability availability) {
-        return adminDao.addAvailability(availability.getFacultyID(),availability.getTerm(),availability.getHasOfficeHours());
+        return adminDao.addAvailability(availability.getFacultyID(),availability.getTermName(),availability.getHasOfficeHours());
     }
 
     public OfficeHours addOfficeHours(OfficeHours officeHours) {
-        return adminDao.addOfficeHours(officeHours.getFacultyID(),officeHours.getTermID(),
+        return adminDao.addOfficeHours(officeHours.getFacultyID(),officeHours.getTermName(),
                 officeHours.getDay(),officeHours.getStartTime(),officeHours.getEndTime());
     }
 }

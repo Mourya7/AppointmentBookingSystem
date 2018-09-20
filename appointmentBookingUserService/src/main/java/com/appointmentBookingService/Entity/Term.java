@@ -6,16 +6,16 @@ import java.util.Date;
  * Created by mourya on 8/22/18.
  */
 public class Term {
-    private String termID;
+    private Integer termID;
     private String startDate;
     private String endDate;
     private String name;
 
-    public String getTermID() {
+    public Integer getTermID() {
         return termID;
     }
 
-    public void setTermID(String termID) {
+    public void setTermID(Integer termID) {
         this.termID = termID;
     }
 

@@ -31,11 +31,11 @@ public class FacultyService {
         return facultyDao.getAcceptedAppointments(facultyID);
     }
 
-    public Boolean acceptAppointment(String meetingID,String facultyID) {
+    public Boolean acceptAppointment(Integer meetingID,String facultyID) {
         return facultyDao.acceptAppointment(meetingID,facultyID);
     }
 
-    public Boolean cancelAppointment(String meetingID,String facultyID) {
+    public Boolean cancelAppointment(Integer meetingID,String facultyID) {
         return facultyDao.cancelAppointment(meetingID,facultyID);
     }
 

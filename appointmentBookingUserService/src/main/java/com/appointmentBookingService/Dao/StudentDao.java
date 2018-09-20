@@ -9,11 +9,10 @@ import java.util.Collection;
  */
 public interface StudentDao {
     public Collection<Faculty> getAllFaculty();
-    public Faculty getFacultyById(int id);
-    public Availability getFacultyAvailability(int id);
-    public Student getStudentInfo(String id);
+    public Availability getFacultyAvailability(String facultyID, String termName);
+    public Student getStudentInfo(String studentID);
     public Appointment requestAppointment(String startTime, String endTime, String facultyID, String studentID, String date, String description, String termName);
-    public Boolean cancelAppointment(String meetingID,String studentID);
-    public Collection<Appointment> getUpcomingAppointments(String id);
-    public Collection<Appointment> getPastAppointments(String id);
+    public Boolean cancelAppointment(Integer meetingID,String studentID);
+    public Collection<Appointment> getUpcomingAppointments(String studentID);
+    public Collection<Appointment> getPastAppointments(String studentID);
 }

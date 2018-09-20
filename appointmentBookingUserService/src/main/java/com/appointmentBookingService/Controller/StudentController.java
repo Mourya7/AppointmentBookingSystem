@@ -29,17 +29,12 @@ public class StudentController {
         return studentService.getAllFaculty();
     }
 
-    @RequestMapping(value = "/faculty/{id}/availability", method = RequestMethod.GET)
-    public Availability getFacultyAvailability(@PathVariable("id") int id) {
-        return studentService.getFacultyAvailability(id);
+    @RequestMapping(value = "/availability", method = RequestMethod.POST)
+    public Availability getFacultyAvailability(@RequestBody Availability availability) {
+        return studentService.getFacultyAvailability(availability);
     }
 
-    @RequestMapping(value="faculty/{id}")
-    public Faculty getFacultyById(@PathVariable("id") int id) {
-        return studentService.getFaculty(id);
-    }
-
-    @RequestMapping(value="/{id}/requestAppointment", method = RequestMethod.POST)
+    @RequestMapping(value="/requestAppointment", method = RequestMethod.POST)
     public Appointment requestAppointment(@RequestBody Appointment appointment) {
         return studentService.requestAppointment(appointment);
     }

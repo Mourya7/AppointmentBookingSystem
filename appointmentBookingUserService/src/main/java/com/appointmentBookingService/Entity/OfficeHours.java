@@ -4,20 +4,28 @@ package com.appointmentBookingService.Entity;
  * Created by mourya on 8/22/18.
  */
 public class OfficeHours {
-    private String id;
-    private String availabilityID;
+    private Integer officeHoursID;
+    private Integer availabilityID;
     private String day;
     private String startTime;
     private String endTime;
     private String facultyID;
-    private String termID;
+    private String termName;
 
-    public String getTermID() {
-        return termID;
+    public Integer getAvailabilityID() {
+        return availabilityID;
     }
 
-    public void setTermID(String termID) {
-        this.termID = termID;
+    public void setAvailabilityID(Integer availabilityID) {
+        this.availabilityID = availabilityID;
+    }
+
+    public String getTermName() {
+        return termName;
+    }
+
+    public void setTermName(String termName) {
+        this.termName = termName;
     }
 
     public String getFacultyID() {
@@ -30,20 +38,12 @@ public class OfficeHours {
 
     public OfficeHours() {};
 
-    public String getId() {
-        return id;
+    public Integer getOfficeHoursID() {
+        return officeHoursID;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getAvailabilityID() {
-        return availabilityID;
-    }
-
-    public void setAvailabilityID(String availabilityID) {
-        this.availabilityID = availabilityID;
+    public void setOfficeHoursID(Integer officeHoursID) {
+        this.officeHoursID = officeHoursID;
     }
 
     public String getDay() {

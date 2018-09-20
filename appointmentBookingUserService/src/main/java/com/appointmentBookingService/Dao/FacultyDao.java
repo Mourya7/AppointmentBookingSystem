@@ -13,8 +13,8 @@ public interface FacultyDao {
     Collection<Appointment> getTodaysAppointment(String id);
     Collection<Appointment> getRequestedAppointments(String id);
     Collection<Appointment> getAcceptedAppointments(String id);
-    Boolean acceptAppointment(String meetingID,String facultyID);
-    Boolean cancelAppointment(String meetingID,String facultyID);
+    Boolean acceptAppointment(Integer meetingID,String facultyID);
+    Boolean cancelAppointment(Integer meetingID,String facultyID);
     Collection<Appointment> getUpcomingAppointments(String id);
     Collection<Appointment> getPastAppointments(String id);
 }

@@ -4,7 +4,7 @@ package com.appointmentBookingService.Entity;
  * Created by mourya on 8/21/18.
  */
 public class Appointment {
-    private String meetingID;
+    private Integer meetingID;
     private String studentID;
     private String facultyID;
     private String startTime;
@@ -58,11 +58,11 @@ public class Appointment {
         this.date = date;
     }
 
-    public String getMeetingID() {
+    public Integer getMeetingID() {
         return meetingID;
     }
 
-    public void setMeetingID(String meetingID) {
+    public void setMeetingID(Integer meetingID) {
         this.meetingID = meetingID;
     }
 

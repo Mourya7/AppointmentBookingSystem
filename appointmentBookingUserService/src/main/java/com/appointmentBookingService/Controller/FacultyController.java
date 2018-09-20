@@ -4,10 +4,7 @@ import com.appointmentBookingService.Entity.Appointment;
 import com.appointmentBookingService.Entity.Faculty;
 import com.appointmentBookingService.Service.FacultyService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 
@@ -22,28 +19,28 @@ public class FacultyController {
         return facultyService.getFacultyInfo(String.valueOf(id));
     }
 
-    @RequestMapping(value="/{id}/{today}",method = RequestMethod.GET)
-    public Collection<Appointment> getTodaysAppointment(@PathVariable("id") int id) {
-        return facultyService.getTodaysAppointment(String.valueOf(id));
+    @RequestMapping(value="/today",method = RequestMethod.POST)
+    public Collection<Appointment> getTodaysAppointments(@RequestBody Faculty faculty) {
+        return facultyService.getTodaysAppointment(faculty.getFacultyId());
     }
 
-    @RequestMapping(value="/{id}/requests",method = RequestMethod.GET)
-    public Collection<Appointment> getRequestedAppointments(@PathVariable("id") int id) {
-        return facultyService.getRequestedAppointments(String.valueOf(id));
+    @RequestMapping(value="/requests",method = RequestMethod.POST)
+    public Collection<Appointment> getRequestedAppointments(@RequestBody Faculty faculty) {
+        return facultyService.getRequestedAppointments(faculty.getFacultyId());
     }
 
-    @RequestMapping(value="/{id}/accepted",method = RequestMethod.GET)
-    public Collection<Appointment> getAcceptedAppointments(@PathVariable("id") int id) {
-        return facultyService.getAcceptedAppointments(String.valueOf(id));
+    @RequestMapping(value="/accepted",method = RequestMethod.POST)
+    public Collection<Appointment> getAcceptedAppointments(@RequestBody Faculty faculty) {
+        return facultyService.getAcceptedAppointments(faculty.getFacultyId());
     }
 
-    @RequestMapping(value="/{id}/accept/{meetingID}",method = RequestMethod.PUT)
-    public Boolean acceptAppointment(@PathVariable("id") int facultyID, @PathVariable("meetingID") int meetingID) {
-        return facultyService.acceptAppointment(String.valueOf(meetingID),String.valueOf(facultyID));
+    @RequestMapping(value="/accept",method = RequestMethod.PUT)
+    public Boolean acceptAppointment(@RequestBody Appointment appointment) {
+        return facultyService.acceptAppointment(appointment.getMeetingID(),appointment.getFacultyID());
     }
 
-    @RequestMapping(value = "/{id}/cancel/{meetingID}",method = RequestMethod.PUT)
-    public Boolean cancelAppointment(@PathVariable("id") int facultyID, @PathVariable("meetingID") int meetingID) {
-        return facultyService.cancelAppointment(String.valueOf(meetingID),String.valueOf(facultyID));
+    @RequestMapping(value = "/cancel",method = RequestMethod.PUT)
+    public Boolean cancelAppointment(@RequestBody Appointment appointment) {
+        return facultyService.cancelAppointment(appointment.getMeetingID(),appointment.getFacultyID());
     }
 }
