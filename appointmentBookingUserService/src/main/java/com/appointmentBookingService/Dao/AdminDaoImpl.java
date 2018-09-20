@@ -12,6 +12,10 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.Collection;
+
 @Repository("admin")
 public class AdminDaoImpl implements AdminDAO {
 
@@ -120,11 +124,12 @@ public class AdminDaoImpl implements AdminDAO {
             public Integer mapRow(ResultSet resultSet, int i) throws SQLException {
                 return resultSet.getInt("availabilityID");
             }
-        });
+        },facultyID,getTermID(termName));
     }
 
     @Override
     public OfficeHours addOfficeHours(String facultyID, String termName, String day, String startTime, String endTime) {
+        if(!isValidOfficeHours(facultyID, termName, day, startTime, endTime)) return null;
         KeyHolder key = new GeneratedKeyHolder();
         final String SQL_GET_HOURS = "Select * from officeHours where officeHoursID = ?";
         jdbcTemplate.update(new PreparedStatementCreator() {
@@ -136,7 +141,7 @@ public class AdminDaoImpl implements AdminDAO {
                 ps.setInt(1,getAvailabilityID(facultyID,termName));
                 ps.setString(2,day);
                 ps.setString(3,startTime);
-                ps.setString(3,endTime);
+                ps.setString(4,endTime);
                 return ps;
             }
         },key);
@@ -156,6 +161,42 @@ public class AdminDaoImpl implements AdminDAO {
         },key.getKey().intValue());
     }
 
+    private Collection<OfficeHours> existingOfficeHours(Integer availabilityID,String day) {
+        final String SQL_GET_OFFICE_HOURS = "Select * from officeHours where availability = ? and day = ?";
+        return jdbcTemplate.query(SQL_GET_OFFICE_HOURS, new RowMapper<OfficeHours>() {
+
+            @Override
+            public OfficeHours mapRow(ResultSet resultSet, int i) throws SQLException {
+                OfficeHours officeHours = new OfficeHours();
+                officeHours.setAvailabilityID(resultSet.getInt("availability"));
+                officeHours.setDay(resultSet.getString("day"));
+                officeHours.setStartTime(resultSet.getString("startTime"));
+                officeHours.setEndTime(resultSet.getString("endTime"));
+                return officeHours;
+            }
+        },availabilityID,day);
+    }
+
+    private boolean isValidOfficeHours(String facultyID, String termName, String day, String startTime, String endTime) {
+        LocalTime minTime = LocalTime.parse("08:00:00");
+        LocalTime maxTime = LocalTime.parse("16:00:00");
+        LocalTime officeStart = LocalTime.parse(startTime);
+        LocalTime officeEnd = LocalTime.parse(endTime);
+        if(officeStart.isBefore(minTime) || officeStart.isAfter(maxTime)) return false;
+        if(officeEnd.isBefore(officeStart) || officeEnd.isAfter(maxTime)) return false;
+        Integer availabilityID = getAvailabilityID(facultyID,termName);
+        Collection<OfficeHours> officeHours = existingOfficeHours(availabilityID,day);
+        for(OfficeHours officeHour : officeHours) {
+            if(day.equalsIgnoreCase(officeHour.getDay())) {
+                LocalTime tempStart = LocalTime.parse(officeHour.getStartTime());
+                LocalTime tempEnd = LocalTime.parse(officeHour.getEndTime());
+                //weak check.. Need to implement a better algorithm
+                if(officeStart.equals(tempStart) || officeStart.equals(tempEnd)) return false;
+                if(officeEnd.equals(tempStart) || officeEnd.equals(tempEnd)) return false;
+            }
+        }
+        return true;
+    }
     @Override
     public void updateOfficeHours(String facultyID, String term, String day, String startTime, String endTime) {
         /*final String SQL_UPDATE_HOURS = "Update officeHours set startTime = ?, endTime = ? where facultyID = ? and term = ? and day = ?";

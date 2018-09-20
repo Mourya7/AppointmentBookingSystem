@@ -33,7 +33,7 @@ public class FacultyDaoImpl extends Person implements FacultyDao {
                 faculty.setFacultyId(resultSet.getString("facultyID"));
                 faculty.setName(resultSet.getString("name"));
                 faculty.setEmail(resultSet.getString("email"));
-                faculty.setDepartmentName(getDepartmentName(resultSet.getString("department")));
+                faculty.setDepartmentName(getDepartmentName(resultSet.getString("departmentID")));
                 faculty.setPhone(resultSet.getString("phone"));
                 return faculty;
             }

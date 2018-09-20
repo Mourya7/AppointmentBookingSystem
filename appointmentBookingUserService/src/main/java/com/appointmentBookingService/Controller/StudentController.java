@@ -1,9 +1,6 @@
 package com.appointmentBookingService.Controller;
 
-import com.appointmentBookingService.Entity.Appointment;
-import com.appointmentBookingService.Entity.Availability;
-import com.appointmentBookingService.Entity.Faculty;
-import com.appointmentBookingService.Entity.Student;
+import com.appointmentBookingService.Entity.*;
 import com.appointmentBookingService.Service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -30,7 +27,7 @@ public class StudentController {
     }
 
     @RequestMapping(value = "/availability", method = RequestMethod.POST)
-    public Availability getFacultyAvailability(@RequestBody Availability availability) {
+    public Collection<OfficeHours> getFacultyAvailability(@RequestBody Availability availability) {
         return studentService.getFacultyAvailability(availability);
     }
 

@@ -62,21 +62,31 @@ public class StudentDaoImpl extends Person implements StudentDao {
     }
 
     @Override
-    public Availability getFacultyAvailability(String facultyID, String termName) {
+    public Collection<OfficeHours> getFacultyAvailability(String facultyID, String termName) {
         Integer termID = getTermIDByName(termName);
-        final String SQL_GET_FACULTY_AVAILABILITY = "SELECT * FROM availability where facultyID = ? and termID = ?";
-        return jdbcTemplate.queryForObject(SQL_GET_FACULTY_AVAILABILITY, new RowMapper<Availability>() {
+        final String SQL_GET_FACULTY_AVAILABILITY = "SELECT availabilityID FROM availability where facultyID = ? and termID = ?";
+        Integer availabilityID = jdbcTemplate.queryForObject(SQL_GET_FACULTY_AVAILABILITY, new RowMapper<Integer>() {
 
             @Override
-            public Availability mapRow(ResultSet resultSet, int i) throws SQLException {
-                Availability availability = new Availability();
-                availability.setFacultyID(resultSet.getString("facultyID"));
-                availability.setAvailabilityID(resultSet.getInt("availabilityID"));
-                availability.setTermID(resultSet.getInt("termID"));
-                availability.setHasOfficeHours(resultSet.getInt("hasOfficeHours"));
-                return availability;
+            public Integer mapRow(ResultSet resultSet, int i) throws SQLException {
+                return resultSet.getInt("availabilityID");
             }
         }, facultyID,termID);
+        return getOfficeHoursByAvailabilityID(availabilityID);
+    }
+
+    private Collection<OfficeHours> getOfficeHoursByAvailabilityID(Integer availabilityID) {
+        final String SQL_GET_OFFICE_HOURS = "Select * from officeHours where availability = ?";
+        return jdbcTemplate.query(SQL_GET_OFFICE_HOURS, new RowMapper<OfficeHours>() {
+            @Override
+            public OfficeHours mapRow(ResultSet resultSet, int i) throws SQLException {
+                OfficeHours officeHours = new OfficeHours();
+                officeHours.setDay(resultSet.getString("day"));
+                officeHours.setStartTime(resultSet.getString("startTime"));
+                officeHours.setEndTime(resultSet.getString("endTime"));
+                return officeHours;
+            }
+        },availabilityID);
     }
 
     private Integer getTermIDByName(String termName) {
@@ -176,7 +186,7 @@ public class StudentDaoImpl extends Person implements StudentDao {
 
     private Collection<OfficeHours> getOfficeHoursByDay(String facultyID,Integer termID, String day) {
         //Nested query to get faculty availabilityID for that term and fetch the office hour start time and end time
-        final String SQL_GET_OFFICE_HOURS= "Select startTime,endTime from officeHours where day = ? and availability in " +
+        final String SQL_GET_OFFICE_HOURS = "Select startTime,endTime from officeHours where day = ? and availability in " +
                 "(Select availabilityID from availability where facultyID = ? and hasOfficeHours = 1 and termID = ?)";
         return jdbcTemplate.query(SQL_GET_OFFICE_HOURS, new RowMapper<OfficeHours>() {
             @Override

@@ -9,7 +9,7 @@ import java.util.Collection;
  */
 public interface StudentDao {
     public Collection<Faculty> getAllFaculty();
-    public Availability getFacultyAvailability(String facultyID, String termName);
+    public Collection<OfficeHours> getFacultyAvailability(String facultyID, String termName);
     public Student getStudentInfo(String studentID);
     public Appointment requestAppointment(String startTime, String endTime, String facultyID, String studentID, String date, String description, String termName);
     public Boolean cancelAppointment(Integer meetingID,String studentID);

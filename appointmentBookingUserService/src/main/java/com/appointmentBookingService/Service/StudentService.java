@@ -24,7 +24,7 @@ public class StudentService {
         return this.studentDao.getAllFaculty();
     }
 
-    public Availability getFacultyAvailability(Availability availability) {
+    public Collection<OfficeHours> getFacultyAvailability(Availability availability) {
         return this.studentDao.getFacultyAvailability(availability.getFacultyID(),availability.getTermName());
     }
 
